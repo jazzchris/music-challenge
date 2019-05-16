@@ -24,7 +24,28 @@ public abstract class AbstractQuestion implements Askable {
 		this.question = question;
 	}
 	
-	public void addWrongOptions(String...strgs) {
+	public void addWrongOptions(String str) {
+		options.add(new Option(str, false));
+		shuffleOptions();
+	}
+	
+	public void addWrongOptions(String str1, String str2) {
+		options.add(new Option(str1, false));
+		options.add(new Option(str2, false));
+		shuffleOptions();
+	}
+	
+	public void addWrongOptions(String str1, String str2, String str3) {
+		options.add(new Option(str1, false));
+		options.add(new Option(str2, false));
+		options.add(new Option(str3, false));
+		shuffleOptions();
+	}
+	
+	public void addWrongOptions(String str1, String str2, String str3, String...strgs) {
+		options.add(new Option(str1, false));
+		options.add(new Option(str2, false));
+		options.add(new Option(str3, false));
 		for(String s : strgs) {
 			options.add(new Option(s, false));
 		}
