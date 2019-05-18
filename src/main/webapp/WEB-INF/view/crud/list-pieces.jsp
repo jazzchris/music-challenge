@@ -29,32 +29,41 @@
 		<c:param name="composerId" value="${composer.id}" />
 	</c:url>
 
-	<a href="${addLink}"> <input type="button" value="Add Piece"
-		class="add-button" />
-	</a>
+	<security:authorize access="hasRole('MANAGER')">
+		<a href="${addLink}"> <input type="button" value="Add Piece"
+			class="add-button" />
+		</a>
+	</security:authorize>
 
 	<table>
 		<tr>
 			<th>Title</th>
-			<th>Action</th>
+			<security:authorize access="hasRole('MANAGER')">			
+				<th>Action</th>
+			</security:authorize>
 		</tr>
 
 		<c:forEach var="tempPiece" items="${piece}">
-
-			<c:url var="updateLink" value="/crud/piece/showFormForUpdate">
-				<c:param name="pieceId" value="${tempPiece.id}" />
-			</c:url>
-
-			<c:url var="deleteLink" value="/crud/piece/delete">
-				<c:param name="pieceId" value="${tempPiece.id}" />
-			</c:url>
-
+			<security:authorize access="hasRole('MANAGER')">
+				<c:url var="updateLink" value="/crud/piece/showFormForUpdate">
+					<c:param name="pieceId" value="${tempPiece.id}" />
+				</c:url>
+			</security:authorize>
+			<security:authorize access="hasRole('ADMIN')">
+				<c:url var="deleteLink" value="/crud/piece/delete">
+					<c:param name="pieceId" value="${tempPiece.id}" />
+				</c:url>
+			</security:authorize>
 			<tr>
 				<td>${tempPiece.title}</td>
-				<td><a href="${updateLink}">Update</a> | <a
-					href="${deleteLink}"
-					onclick="if (!(confirm('Are you sure you want to delete this piece?'))) return false">Delete</a>
-				</td>
+				
+				<security:authorize access="hasRole('MANAGER')">
+					<td><a href="${updateLink}">Update</a>
+						<security:authorize access="hasRole('ADMIN')"> | <a href="${deleteLink}"
+							onclick="if (!(confirm('Are you sure you want to delete this piece?'))) return false">Delete</a>
+						</security:authorize>
+					</td>
+				</security:authorize>
 			</tr>
 
 		</c:forEach>
