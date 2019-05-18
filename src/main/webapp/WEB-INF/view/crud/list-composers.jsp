@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 
 <html>
@@ -9,10 +10,16 @@
 </head>
 
 <body>
-	<form:form action="${pageContext.request.contextPath}/logout" method="POST">
-		<input type="submit" value="logout" />
-	</form:form>
-	
+	<table>
+		<tr>
+			<td>Hi, <security:authentication property="principal.username" />!</td>
+			<td><security:authentication property="principal.authorities" /></td>
+			<td><form:form action="${pageContext.request.contextPath}/logout" method="POST">
+					<input type="submit" value="logout" />
+				</form:form></td>
+		</tr>
+	</table>
+
 	<h2>Composer and Piece Manager</h2>
 
 	<h3>List of composers</h3>
