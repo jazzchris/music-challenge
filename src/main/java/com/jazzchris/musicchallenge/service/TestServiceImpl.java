@@ -26,9 +26,10 @@ public class TestServiceImpl implements TestService {
 		if (list != null) {
 			list.clear();
 		}
+		else {
+			list = new LinkedList<AbstractQuestion>();
+		}
 		
-		list = new LinkedList<AbstractQuestion>();
-
 		// populating hardcoded question list...
 		
 		AbstractQuestion tempQuest = new TextQuestion("When did Bach born", "31st March 1685");

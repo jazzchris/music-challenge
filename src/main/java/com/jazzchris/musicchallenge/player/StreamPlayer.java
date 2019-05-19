@@ -11,6 +11,7 @@ public class StreamPlayer implements Runnable {
 	private final AtomicBoolean running = new AtomicBoolean(false);
 	private AdvancedPlayer advancedPlayer = null;
 	private InputStream inputStream;
+	private Thread player = new Thread(this);
 	
 	public StreamPlayer() {}
 	
@@ -23,8 +24,9 @@ public class StreamPlayer implements Runnable {
 	}
 	
 	public void start() {
-		Thread player = new Thread(this);
-		player.start();
+		if(!player.isAlive()) {
+			player.start();
+		}
 	}
 	
 	public void stop() {
