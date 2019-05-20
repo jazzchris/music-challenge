@@ -1,6 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 
@@ -14,17 +13,8 @@
 
 <body>
 <div class="container">
-	<table class="table">
-		<tr>
-			<td>Hi, <security:authentication property="principal.username" />!</td>
-			<td><security:authentication property="principal.authorities" /></td>
-			<td class="float-right"><form:form action="${pageContext.request.contextPath}/logout" method="POST">
-					<input type="submit" value="logout" class="btn btn-sm btn-outline-secondary" />
-				</form:form></td>
-		</tr>
-	</table>
-	<hr>
 
+<jsp:include page="navi.jsp" />
 	
 	<h2 class="text-center">Composer and Piece Manager</h2>
 
