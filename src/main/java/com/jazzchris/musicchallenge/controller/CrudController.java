@@ -36,7 +36,10 @@ public class CrudController {
 	@GetMapping("/piece/delete")
 	public String deletePiece(@RequestParam("pieceId") int theId) {
 		
-		String title = mainService.getPiece(theId).getTitle();
+		Piece thePiece = mainService.getPiece(theId);
+		String title = thePiece.getTitle();
+		int composerId = thePiece.getComposer().getId();
+		
 		mainService.deletePiece(theId);
 		
 		try {
@@ -45,7 +48,9 @@ public class CrudController {
 			System.out.println("File of the given name does not exist");
 		}
 		
-		return "redirect:/crud/composer/list";
+		String builder = "redirect:/crud/piece?composerId=".concat(""+composerId);
+		
+		return builder;
 	}
 	
 	@GetMapping("/composer/list")
@@ -131,7 +136,7 @@ public class CrudController {
 		Piece thePiece = mainService.getPiece(theId);
 		theModel.addAttribute("piece", thePiece);
 
-		return "crud/piece-form";
+		return "crud/piece-form-upload";
 	}
 	
 	@GetMapping("/piece/showFormForAddPieceAndUpload")

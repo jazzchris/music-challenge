@@ -6,24 +6,28 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<title>List Pieces</title>
 </head>
 
 <body>
-	<table>
+<div class="container">
+	<table class="table">
 		<tr>
 			<td>Hi, <security:authentication property="principal.username" />!</td>
 			<td><security:authentication property="principal.authorities" /></td>
-			<td><form:form action="${pageContext.request.contextPath}/logout" method="POST">
-					<input type="submit" value="logout" />
+			<td class="float-right"><form:form action="${pageContext.request.contextPath}/logout" method="POST">
+					<input type="submit" value="logout" class="btn btn-sm btn-outline-secondary" />
 				</form:form></td>
 		</tr>
 	</table>
+	<hr>
 
+	<h2 class="text-center">Composer and Piece Manager</h2>
 
-	<h2>Composer and Piece Manager</h2>
-
-	<h3>Pieces by ${composer.firstName} ${composer.lastName}</h3>
+	<h5>Pieces by ${composer.firstName} ${composer.lastName}</h5>
 
 	<c:url var="addLink" value="/crud/piece/showFormForAddPieceAndUpload">
 		<c:param name="composerId" value="${composer.id}" />
@@ -31,12 +35,12 @@
 
 	<security:authorize access="hasRole('MANAGER')">
 		<a href="${addLink}"> <input type="button" value="Add Piece"
-			class="add-button" />
+			class="btn btn-sm btn-outline-primary" />
 		</a>
 	</security:authorize>
-
-	<table>
-		<tr>
+	<br><br>
+	<table class="table table-striped table-hover">
+		<tr class="thead-dark">
 			<th>Title</th>
 			<security:authorize access="hasRole('MANAGER')">			
 				<th>Action</th>
@@ -75,6 +79,7 @@
 			Back to composer list
 		</a>
 	</p>
+	</div>
 </body>
 
 </html>
