@@ -3,10 +3,17 @@ package com.jazzchris.musicchallenge.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +29,15 @@ import com.jazzchris.musicchallenge.service.MainService;
 @RequestMapping("/crud")
 public class CrudController {
 
+	@Autowired
+	@Qualifier("composerValidator")
+	private Validator validator;
+
+	@InitBinder("composer")
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(validator);
+	}
+	
 	@Autowired
 	private MainService mainService;
 	
@@ -76,10 +92,13 @@ public class CrudController {
 	}
 	
 	@PostMapping("/composer/saveComposer")
-	public String saveComposer(@ModelAttribute("composer") Composer theComposer) {
-		
+	public String saveComposer(@ModelAttribute("composer") @Valid Composer theComposer, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			System.out.println("Cannot save the composer");
+			return "crud/composer-form";
+		}
 		mainService.saveComposer(theComposer);
-		
+
 		return "redirect:/crud/composer/list";
 	}
 	

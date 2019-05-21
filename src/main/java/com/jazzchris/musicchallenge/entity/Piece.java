@@ -34,6 +34,7 @@ public class Piece {
 		this.title = title;
 	}
 
+
 	public int getId() {
 		return id;
 	}

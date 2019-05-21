@@ -1,5 +1,6 @@
 package com.jazzchris.musicchallenge.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="composer")
@@ -27,6 +30,14 @@ public class Composer {
 	
 	@Column(name="last_name")
 	private String lastName;
+	
+	@Column(name="date_birth")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dateBirth;
+	
+	@Column(name="date_death")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dateDeath;
 	
 	@OneToMany(fetch=FetchType.LAZY, 
 			mappedBy="composer",
@@ -62,6 +73,22 @@ public class Composer {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public LocalDate getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(LocalDate dateBirth) {
+		this.dateBirth = dateBirth;
+	}
+
+	public LocalDate getDateDeath() {
+		return dateDeath;
+	}
+
+	public void setDateDeath(LocalDate dateDeath) {
+		this.dateDeath = dateDeath;
 	}
 
 	public List<Piece> getPieces() {
